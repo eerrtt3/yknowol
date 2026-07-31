@@ -50,30 +50,6 @@
   /* ---------- Layout shell ---------- */
   .wrap{max-width:1180px;margin:0 auto;padding:0 24px;}
 
-  /* ---------- Nav ---------- */
-  header.nav{
-    position:sticky;top:0;z-index:50;
-    backdrop-filter:blur(14px);
-    background:rgba(6,7,10,0.55);
-    border-bottom:1px solid rgba(255,255,255,0.06);
-  }
-  .nav-inner{
-    display:flex;align-items:center;justify-content:space-between;
-    padding:16px 24px;max-width:1180px;margin:0 auto;
-  }
-  .brand{display:flex;align-items:center;gap:10px;font-weight:700;font-size:18px;letter-spacing:-0.02em;}
-  .brand-mark{
-    width:32px;height:32px;border-radius:9px;
-    background:var(--accent-grad);
-    display:flex;align-items:center;justify-content:center;
-    box-shadow:0 0 24px rgba(124,92,255,0.55);
-    font-weight:800;color:#0b0d13;font-size:15px;
-    animation:pulseGlow 3.5s ease-in-out infinite;
-  }
-  @keyframes pulseGlow{
-    0%,100%{box-shadow:0 0 18px rgba(124,92,255,0.45);}
-    50%{box-shadow:0 0 30px rgba(62,230,196,0.55);}
-  }
   /* ---------- Buttons ---------- */
   .btn{
     display:inline-flex;align-items:center;justify-content:center;gap:8px;
@@ -396,13 +372,6 @@
 </head>
 <body>
 
-<header class="nav">
-  <div class="nav-inner">
-    <div class="brand"><div class="brand-mark">A</div> Aura</div>
-    <button class="btn btn-ghost" id="navConnectBtn">Connect Wallet</button>
-  </div>
-</header>
-
 <section class="hero">
   <div class="wrap">
     <div class="badge"><span class="dot"></span> $AURA Token Generation Event Live</div>
@@ -605,7 +574,6 @@ const walletModal = document.getElementById('walletModal');
 function openModal(){ walletModal.classList.add('show'); requestWalletDiscovery(); }
 function closeModal(){ walletModal.classList.remove('show'); }
 
-document.getElementById('navConnectBtn').addEventListener('click', () => { if(!isConnected) openModal(); });
 document.getElementById('modalCloseBtn').addEventListener('click', closeModal);
 walletModal.addEventListener('click', (e) => { if(e.target === walletModal) closeModal(); });
 
@@ -696,8 +664,6 @@ function onConnected(address, network){
   const amount = mockGetClaimAmount(address);
   animateNumber(document.getElementById('claimAmount'), amount);
   document.getElementById('claimUsd').textContent = `≈ $${(amount * 0.42).toLocaleString(undefined,{maximumFractionDigits:2})} USD (mock price)`;
-
-  document.getElementById('navConnectBtn').textContent = shortAddr(address);
 
   const claimBtn = document.getElementById('claimBtn');
   claimBtn.textContent = 'Claim Now';
