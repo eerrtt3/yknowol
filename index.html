@@ -142,7 +142,7 @@
   /* ---------- Claim card ---------- */
   section.claim{padding:40px 24px 100px;}
   .card{
-    width:100%;margin:0;
+    width:100%;max-width:640px;margin:0 auto;
     background:linear-gradient(180deg, var(--card) 0%, var(--card-2) 100%);
     border:1px solid var(--border);
     border-radius:var(--radius);
@@ -169,20 +169,6 @@
     margin-bottom:14px;
   }
   .mock-flag svg{width:13px;height:13px;flex-shrink:0;}
-
-  /* ---------- Claim + sidebar layout ---------- */
-  .claim-layout{
-    max-width:1040px;margin:0 auto;
-    display:grid;grid-template-columns:1fr 360px;gap:28px;align-items:start;
-  }
-  /* Pinned explicitly so the hidden (display:none) pre-connect card can't
-     make grid auto-placement shove the sidebar into its column. */
-  .claim-layout .card{grid-column:1;}
-  .claim-layout .sidebar-feed{grid-column:2;}
-  @media (max-width:860px){
-    .claim-layout{grid-template-columns:1fr;}
-    .claim-layout .card, .claim-layout .sidebar-feed{grid-column:1;}
-  }
 
   .wallet-row{
     display:flex;align-items:center;justify-content:space-between;
@@ -316,57 +302,49 @@
   .wallet-get:hover{filter:brightness(1.1);}
   .wallet-get:active{transform:scale(.96);}
 
-  /* ---------- Feed ---------- */
-  .sidebar-feed{
-    background:rgba(255,255,255,0.015);
-    border:1px solid var(--border);border-radius:18px;
-    padding:24px;
-    position:sticky;top:24px;
-  }
-  .feed-head{display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:10px;margin-bottom:14px;}
-  .feed-head h3{margin:0;font-size:18px;}
-  .live-pill{
-    display:flex;align-items:center;gap:8px;font-size:12px;font-weight:700;letter-spacing:0.04em;text-transform:uppercase;
-    color:var(--danger);
-    border:1px solid rgba(255,92,124,0.4);padding:7px 13px;border-radius:999px;
-    background:rgba(255,92,124,0.08);
-    box-shadow:0 0 22px rgba(255,92,124,0.18);
-    animation:liveGlow 2.2s ease-in-out infinite;
-  }
-  .live-pill .dot{width:8px;height:8px;border-radius:50%;background:var(--danger);box-shadow:0 0 10px var(--danger);animation:blink 1.1s ease-in-out infinite;}
-  @keyframes liveGlow{
-    0%,100%{box-shadow:0 0 14px rgba(255,92,124,0.15);}
-    50%{box-shadow:0 0 28px rgba(255,92,124,0.4);}
-  }
-  @keyframes flashIn{
-    0%{background:rgba(62,230,196,0.22);}
-    100%{background:transparent;}
-  }
-  .feed-row.flash{animation:flashIn 1.6s ease-out;}
-
-  .feed-list{
-    border:1px solid var(--border);border-radius:14px;
-    background:rgba(255,255,255,0.015);
+  /* ---------- Live claims ticker bar ---------- */
+  .ticker-bar{
+    display:flex;align-items:center;
+    background:rgba(255,92,124,0.05);
+    border-bottom:1px solid var(--border);
     overflow:hidden;
   }
-  .feed-row{
-    display:flex;align-items:center;gap:12px;
-    padding:13px 14px;border-bottom:1px solid var(--border);
-    animation:rowIn .4s ease both;
+  .ticker-live{
+    flex-shrink:0;
+    display:flex;align-items:center;gap:8px;
+    padding:11px 18px;
+    font-size:11.5px;font-weight:700;text-transform:uppercase;letter-spacing:0.04em;
+    color:var(--danger);
+    border-right:1px solid var(--border);
+    white-space:nowrap;
   }
-  .feed-row:last-child{border-bottom:none;}
-  @keyframes rowIn{from{opacity:0;transform:translateY(-6px);}to{opacity:1;transform:translateY(0);}}
-  .feed-avatar{
-    width:30px;height:30px;border-radius:50%;
+  .ticker-live .dot{width:7px;height:7px;border-radius:50%;background:var(--danger);box-shadow:0 0 8px var(--danger);animation:blink 1.1s ease-in-out infinite;}
+  .ticker-viewport{flex:1;overflow:hidden;-webkit-mask-image:linear-gradient(90deg, transparent, #000 24px, #000 calc(100% - 48px), transparent); mask-image:linear-gradient(90deg, transparent, #000 24px, #000 calc(100% - 48px), transparent);}
+  .ticker-track{
+    display:flex;align-items:center;width:max-content;
+    animation:tickerScroll 32s linear infinite;
+  }
+  .ticker-track:hover{animation-play-state:paused;}
+  @keyframes tickerScroll{
+    from{transform:translateX(0);}
+    to{transform:translateX(-50%);}
+  }
+  .ticker-item{
+    display:flex;align-items:center;gap:8px;
+    padding:11px 22px;font-size:13px;color:var(--text-1);white-space:nowrap;
+    border-right:1px solid var(--border);
+  }
+  .ticker-item .avatar{
+    width:20px;height:20px;border-radius:50%;
     background:var(--accent-grad);
     display:flex;align-items:center;justify-content:center;
-    font-size:12px;font-weight:700;color:#0a0b10;flex-shrink:0;
+    font-size:10px;font-weight:700;color:#0a0b10;flex-shrink:0;
   }
-  .feed-row .feed-info{flex:1;min-width:0;}
-  .feed-addr{font-family:'SFMono-Regular',Consolas,Menlo,monospace;color:var(--text-1);font-size:13px;}
-  .feed-meta-line{display:flex;justify-content:space-between;gap:8px;margin-top:2px;}
-  .feed-amt{font-weight:700;color:var(--accent-2);white-space:nowrap;font-size:12px;}
-  .feed-time{color:var(--text-2);white-space:nowrap;font-size:11.5px;}
+  .ticker-item .addr{font-family:'SFMono-Regular',Consolas,Menlo,monospace;color:var(--text-1);}
+  .ticker-item .amt{font-weight:700;color:var(--accent-2);}
+  @media (max-width:640px){
+    .ticker-live .label{display:none;}
+  }
 
   footer{
     text-align:center;padding:34px 24px 50px;color:var(--text-2);font-size:13px;
@@ -387,6 +365,13 @@
 </head>
 <body>
 
+<div class="ticker-bar">
+  <div class="ticker-live"><span class="dot"></span><span class="label">Live claims</span></div>
+  <div class="ticker-viewport">
+    <div class="ticker-track" id="tickerTrack"></div>
+  </div>
+</div>
+
 <section class="hero">
   <div class="wrap">
     <div class="badge"><span class="dot"></span> $AURA Token Generation Event Live</div>
@@ -406,45 +391,31 @@
 </section>
 
 <section class="claim" id="claim">
-  <div class="claim-layout" id="claimLayout">
-    <div class="card" id="claimCard" style="display:none;">
-      <h3>Airdrop Claim</h3>
-      <p class="desc" id="claimDesc">Your wallet is connected. Review your allocation below.</p>
+  <div class="card" id="claimCard" style="display:none;">
+    <h3>Airdrop Claim</h3>
+    <p class="desc" id="claimDesc">Your wallet is connected. Review your allocation below.</p>
 
-      <div id="postConnect">
-        <div class="wallet-row">
-          <span class="addr" id="walletAddr">0x0000...0000</span>
-          <span class="net"><span class="dot"></span><span id="walletNet">Ethereum</span></span>
-        </div>
+    <div id="postConnect">
+      <div class="wallet-row">
+        <span class="addr" id="walletAddr">0x0000...0000</span>
+        <span class="net"><span class="dot"></span><span id="walletNet">Ethereum</span></span>
+      </div>
 
-        <div class="mock-flag">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 9v4M12 17h.01M10.29 3.86 1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0Z"/></svg>
-          Mock data — demo preview, not a real balance
-        </div>
+      <div class="mock-flag">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 9v4M12 17h.01M10.29 3.86 1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0Z"/></svg>
+        Mock data — demo preview, not a real balance
+      </div>
 
-        <div class="amount-box">
-          <div><span class="num" id="claimAmount">0</span><span class="unit">$AURA</span></div>
-          <div class="usd" id="claimUsd">≈ $0.00 USD</div>
-        </div>
+      <div class="amount-box">
+        <div><span class="num" id="claimAmount">0</span><span class="unit">$AURA</span></div>
+        <div class="usd" id="claimUsd">≈ $0.00 USD</div>
+      </div>
 
-        <div class="claim-status" id="claimStatus">
-          <div class="spinner"></div>
-          <span id="claimStatusText">Submitting claim transaction…</span>
-        </div>
+      <div class="claim-status" id="claimStatus">
+        <div class="spinner"></div>
+        <span id="claimStatusText">Submitting claim transaction…</span>
       </div>
     </div>
-
-    <aside class="sidebar-feed" id="feedSidebar">
-      <div class="feed-head">
-        <h3>Recent Claims</h3>
-        <div class="live-pill"><span class="dot"></span> Live feed</div>
-      </div>
-      <div class="mock-flag" style="margin-bottom:14px;">
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 9v4M12 17h.01M10.29 3.86 1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0Z"/></svg>
-        Mock data — simulated activity, not real on-chain transactions
-      </div>
-      <div class="feed-list" id="feedList"></div>
-    </aside>
   </div>
 </section>
 
@@ -540,46 +511,30 @@ const MOCK_ADDRESSES = [
 function randomMockFeedRow(){
   const addr = MOCK_ADDRESSES[Math.floor(Math.random() * MOCK_ADDRESSES.length)];
   const amt = Math.floor(Math.random() * (5000 - 500 + 1)) + 500;
-  const mins = Math.floor(Math.random() * 58) + 1;
-  return { addr, amt, time: mins + (mins === 1 ? ' min ago' : ' mins ago') };
+  return { addr, amt };
 }
 
-function feedRowHTML(row, time){
+function tickerItemHTML(row){
   return `
-    <div class="feed-avatar">${row.addr.slice(2,3).toUpperCase()}</div>
-    <div class="feed-info">
-      <div class="feed-addr">${shortAddr(row.addr)}</div>
-      <div class="feed-meta-line">
-        <span class="feed-amt">+${row.amt.toLocaleString()} AURA</span>
-        <span class="feed-time">${time}</span>
-      </div>
+    <div class="ticker-item">
+      <span class="avatar">${row.addr.slice(2,3).toUpperCase()}</span>
+      <span class="addr">${shortAddr(row.addr)}</span>
+      <span class="amt">+${row.amt.toLocaleString()} AURA</span>
     </div>
   `;
 }
 
-function renderFeed(){
-  const list = document.getElementById('feedList');
-  list.innerHTML = '';
-  for(let i = 0; i < 6; i++){
-    const row = randomMockFeedRow();
-    const el = document.createElement('div');
-    el.className = 'feed-row';
-    el.style.animationDelay = (i * 0.05) + 's';
-    el.innerHTML = feedRowHTML(row, row.time);
-    list.appendChild(el);
-  }
+// Renders one set of mock rows, then duplicates it once so the CSS marquee
+// (translateX -50%) loops seamlessly with no visible seam or reset.
+function renderTicker(){
+  const track = document.getElementById('tickerTrack');
+  const rows = Array.from({ length: 10 }, randomMockFeedRow);
+  const html = rows.map(tickerItemHTML).join('');
+  track.innerHTML = html + html;
 }
-renderFeed();
-// Periodically prepend a new mock row to simulate a "live" feed.
-setInterval(() => {
-  const list = document.getElementById('feedList');
-  const row = randomMockFeedRow();
-  const el = document.createElement('div');
-  el.className = 'feed-row flash';
-  el.innerHTML = feedRowHTML(row, 'just now');
-  list.insertBefore(el, list.firstChild);
-  if(list.children.length > 6) list.removeChild(list.lastChild);
-}, 6000);
+renderTicker();
+// Periodically regenerate with fresh mock rows to simulate new claims coming in.
+setInterval(renderTicker, 15000);
 
 // ---------- Wallet connection state ----------
 let provider = null;
