@@ -142,7 +142,7 @@
   /* ---------- Claim card ---------- */
   section.claim{padding:40px 24px 100px;}
   .card{
-    width:100%;max-width:640px;margin:0 auto;
+    width:100%;margin:0;
     background:linear-gradient(180deg, var(--card) 0%, var(--card-2) 100%);
     border:1px solid var(--border);
     border-radius:var(--radius);
@@ -151,7 +151,6 @@
     position:relative;
     overflow:hidden;
   }
-  .claim-layout.connected .card{max-width:none;margin:0;}
   .card::before{
     content:"";position:absolute;top:-40%;right:-30%;width:60%;height:80%;
     background:radial-gradient(circle, rgba(124,92,255,0.18), transparent 70%);
@@ -174,11 +173,15 @@
   /* ---------- Claim + sidebar layout ---------- */
   .claim-layout{
     max-width:1040px;margin:0 auto;
-    display:grid;grid-template-columns:1fr;gap:28px;align-items:start;
+    display:grid;grid-template-columns:1fr 360px;gap:28px;align-items:start;
   }
-  .claim-layout.connected{grid-template-columns:1fr 360px;}
+  /* Pinned explicitly so the hidden (display:none) pre-connect card can't
+     make grid auto-placement shove the sidebar into its column. */
+  .claim-layout .card{grid-column:1;}
+  .claim-layout .sidebar-feed{grid-column:2;}
   @media (max-width:860px){
-    .claim-layout.connected{grid-template-columns:1fr;}
+    .claim-layout{grid-template-columns:1fr;}
+    .claim-layout .card, .claim-layout .sidebar-feed{grid-column:1;}
   }
 
   .wallet-row{
@@ -314,14 +317,12 @@
   .wallet-get:active{transform:scale(.96);}
 
   /* ---------- Feed ---------- */
-  section.feed{padding:0 24px 110px;}
   .sidebar-feed{
-    max-width:420px;margin:0 auto;
     background:rgba(255,255,255,0.015);
     border:1px solid var(--border);border-radius:18px;
     padding:24px;
+    position:sticky;top:24px;
   }
-  .claim-layout.connected .sidebar-feed{max-width:none;margin:0;position:sticky;top:24px;}
   .feed-head{display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:10px;margin-bottom:14px;}
   .feed-head h3{margin:0;font-size:18px;}
   .live-pill{
@@ -675,7 +676,6 @@ document.getElementById('opt-walletconnect').addEventListener('click', () => { c
 function onConnected(address, network){
   isConnected = true;
   document.getElementById('claimCard').style.display = 'block';
-  document.getElementById('claimLayout').classList.add('connected');
   document.getElementById('walletAddr').textContent = shortAddr(address);
   document.getElementById('walletNet').textContent = network && network.name ? network.name : 'Connected';
 
