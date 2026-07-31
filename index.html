@@ -74,11 +74,6 @@
     0%,100%{box-shadow:0 0 18px rgba(124,92,255,0.45);}
     50%{box-shadow:0 0 30px rgba(62,230,196,0.55);}
   }
-  .nav-links{display:flex;gap:28px;font-size:14px;color:var(--text-1);}
-  .nav-links a{transition:color .2s ease;}
-  .nav-links a:hover{color:var(--text-0);}
-  @media (max-width:760px){.nav-links{display:none;}}
-
   /* ---------- Buttons ---------- */
   .btn{
     display:inline-flex;align-items:center;justify-content:center;gap:8px;
@@ -404,12 +399,6 @@
 <header class="nav">
   <div class="nav-inner">
     <div class="brand"><div class="brand-mark">A</div> Aura</div>
-    <nav class="nav-links">
-      <a href="#claim">Claim</a>
-      <a href="#feed">Activity</a>
-      <a href="#" onclick="return false;">Docs</a>
-      <a href="#" onclick="return false;">Governance</a>
-    </nav>
     <button class="btn btn-ghost" id="navConnectBtn">Connect Wallet</button>
   </div>
 </header>
@@ -431,6 +420,18 @@
       <div class="stat"><b>0%</b><span>Claim Fee</span></div>
     </div>
   </div>
+</section>
+
+<section class="feed" id="feed">
+  <div class="feed-head">
+    <h3>Recent Claims</h3>
+    <div class="live-pill"><span class="dot"></span> Live feed</div>
+  </div>
+  <div class="mock-flag" style="max-width:900px;margin:0 auto 14px;">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 9v4M12 17h.01M10.29 3.86 1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0Z"/></svg>
+    Mock data — simulated activity for design preview, not real on-chain transactions
+  </div>
+  <div class="feed-list" id="feedList"></div>
 </section>
 
 <section class="claim" id="claim">
@@ -460,18 +461,6 @@
       </div>
     </div>
   </div>
-</section>
-
-<section class="feed" id="feed">
-  <div class="feed-head">
-    <h3>Recent Claims</h3>
-    <div class="live-pill"><span class="dot"></span> Live feed</div>
-  </div>
-  <div class="mock-flag" style="max-width:900px;margin:0 auto 14px;">
-    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 9v4M12 17h.01M10.29 3.86 1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0Z"/></svg>
-    Mock data — simulated activity for design preview, not real on-chain transactions
-  </div>
-  <div class="feed-list" id="feedList"></div>
 </section>
 
 <footer>
