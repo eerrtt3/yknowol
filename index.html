@@ -142,24 +142,44 @@
   /* ---------- Claim card ---------- */
   section.claim{padding:40px 24px 100px;}
   .card{
-    max-width:560px;margin:0 auto;
+    width:100%;max-width:640px;margin:0 auto;
     background:linear-gradient(180deg, var(--card) 0%, var(--card-2) 100%);
     border:1px solid var(--border);
     border-radius:var(--radius);
-    padding:36px;
+    padding:44px;
     box-shadow:var(--shadow-lg);
     position:relative;
     overflow:hidden;
   }
+  .claim-layout.connected .card{max-width:none;margin:0;}
   .card::before{
     content:"";position:absolute;top:-40%;right:-30%;width:60%;height:80%;
     background:radial-gradient(circle, rgba(124,92,255,0.18), transparent 70%);
     pointer-events:none;
   }
-  .card h3{margin:0 0 6px;font-size:20px;font-weight:700;}
-  .card p.desc{margin:0 0 26px;color:var(--text-2);font-size:14px;}
+  .card h3{margin:0 0 6px;font-size:24px;font-weight:700;}
+  .card p.desc{margin:0 0 26px;color:var(--text-2);font-size:15px;}
 
-  
+  .mock-flag{
+    display:inline-flex;align-items:center;gap:7px;
+    font-size:11.5px;font-weight:700;letter-spacing:0.04em;text-transform:uppercase;
+    color:var(--warn);
+    background:rgba(255,184,77,0.1);
+    border:1px solid rgba(255,184,77,0.35);
+    padding:5px 10px;border-radius:8px;
+    margin-bottom:14px;
+  }
+  .mock-flag svg{width:13px;height:13px;flex-shrink:0;}
+
+  /* ---------- Claim + sidebar layout ---------- */
+  .claim-layout{
+    max-width:1040px;margin:0 auto;
+    display:grid;grid-template-columns:1fr;gap:28px;align-items:start;
+  }
+  .claim-layout.connected{grid-template-columns:1fr 360px;}
+  @media (max-width:860px){
+    .claim-layout.connected{grid-template-columns:1fr;}
+  }
 
   .wallet-row{
     display:flex;align-items:center;justify-content:space-between;
@@ -167,24 +187,24 @@
     border:1px solid var(--border);
     border-radius:12px;padding:14px 16px;margin-bottom:18px;
   }
-  .wallet-row .addr{font-family:'SFMono-Regular',Consolas,Menlo,monospace;font-size:14.5px;color:var(--text-0);}
+  .wallet-row .addr{font-family:'SFMono-Regular',Consolas,Menlo,monospace;font-size:16px;color:var(--text-0);}
   .wallet-row .net{font-size:12px;color:var(--accent-2);display:flex;align-items:center;gap:6px;}
   .wallet-row .net .dot{width:7px;height:7px;border-radius:50%;background:var(--accent-2);}
 
   .amount-box{
     text-align:center;
-    padding:28px 20px;
-    border-radius:14px;
+    padding:36px 20px;
+    border-radius:16px;
     background:radial-gradient(circle at 50% 0%, rgba(124,92,255,0.12), rgba(255,255,255,0.02));
     border:1px solid var(--border);
     margin-bottom:22px;
   }
   .amount-box .num{
-    font-size:44px;font-weight:800;letter-spacing:-0.02em;
+    font-size:58px;font-weight:800;letter-spacing:-0.02em;
     background:var(--accent-grad);-webkit-background-clip:text;background-clip:text;color:transparent;
   }
-  .amount-box .unit{font-size:16px;color:var(--text-1);font-weight:600;margin-left:6px;}
-  .amount-box .usd{margin-top:6px;font-size:13px;color:var(--text-2);}
+  .amount-box .unit{font-size:19px;color:var(--text-1);font-weight:600;margin-left:6px;}
+  .amount-box .usd{margin-top:8px;font-size:14px;color:var(--text-2);}
 
   .claim-status{
     display:none;
@@ -295,17 +315,24 @@
 
   /* ---------- Feed ---------- */
   section.feed{padding:0 24px 110px;}
-  .feed-head{max-width:900px;margin:0 auto 18px;display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:10px;}
-  .feed-head h3{margin:0;font-size:20px;}
+  .sidebar-feed{
+    max-width:420px;margin:0 auto;
+    background:rgba(255,255,255,0.015);
+    border:1px solid var(--border);border-radius:18px;
+    padding:24px;
+  }
+  .claim-layout.connected .sidebar-feed{max-width:none;margin:0;position:sticky;top:24px;}
+  .feed-head{display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:10px;margin-bottom:14px;}
+  .feed-head h3{margin:0;font-size:18px;}
   .live-pill{
-    display:flex;align-items:center;gap:9px;font-size:13.5px;font-weight:700;letter-spacing:0.04em;text-transform:uppercase;
+    display:flex;align-items:center;gap:8px;font-size:12px;font-weight:700;letter-spacing:0.04em;text-transform:uppercase;
     color:var(--danger);
-    border:1px solid rgba(255,92,124,0.4);padding:9px 16px;border-radius:999px;
+    border:1px solid rgba(255,92,124,0.4);padding:7px 13px;border-radius:999px;
     background:rgba(255,92,124,0.08);
     box-shadow:0 0 22px rgba(255,92,124,0.18);
     animation:liveGlow 2.2s ease-in-out infinite;
   }
-  .live-pill .dot{width:9px;height:9px;border-radius:50%;background:var(--danger);box-shadow:0 0 10px var(--danger);animation:blink 1.1s ease-in-out infinite;}
+  .live-pill .dot{width:8px;height:8px;border-radius:50%;background:var(--danger);box-shadow:0 0 10px var(--danger);animation:blink 1.1s ease-in-out infinite;}
   @keyframes liveGlow{
     0%,100%{box-shadow:0 0 14px rgba(255,92,124,0.15);}
     50%{box-shadow:0 0 28px rgba(255,92,124,0.4);}
@@ -317,15 +344,13 @@
   .feed-row.flash{animation:flashIn 1.6s ease-out;}
 
   .feed-list{
-    max-width:900px;margin:0 auto;
-    border:1px solid var(--border);border-radius:16px;
+    border:1px solid var(--border);border-radius:14px;
     background:rgba(255,255,255,0.015);
     overflow:hidden;
   }
   .feed-row{
-    display:grid;grid-template-columns:auto 1fr auto auto;gap:14px;align-items:center;
-    padding:14px 18px;border-bottom:1px solid var(--border);
-    font-size:13.5px;
+    display:flex;align-items:center;gap:12px;
+    padding:13px 14px;border-bottom:1px solid var(--border);
     animation:rowIn .4s ease both;
   }
   .feed-row:last-child{border-bottom:none;}
@@ -336,13 +361,11 @@
     display:flex;align-items:center;justify-content:center;
     font-size:12px;font-weight:700;color:#0a0b10;flex-shrink:0;
   }
-  .feed-addr{font-family:'SFMono-Regular',Consolas,Menlo,monospace;color:var(--text-1);}
-  .feed-amt{font-weight:700;color:var(--accent-2);white-space:nowrap;}
-  .feed-time{color:var(--text-2);white-space:nowrap;font-size:12.5px;}
-  @media (max-width:600px){
-    .feed-row{grid-template-columns:auto 1fr auto;}
-    .feed-time{display:none;}
-  }
+  .feed-row .feed-info{flex:1;min-width:0;}
+  .feed-addr{font-family:'SFMono-Regular',Consolas,Menlo,monospace;color:var(--text-1);font-size:13px;}
+  .feed-meta-line{display:flex;justify-content:space-between;gap:8px;margin-top:2px;}
+  .feed-amt{font-weight:700;color:var(--accent-2);white-space:nowrap;font-size:12px;}
+  .feed-time{color:var(--text-2);white-space:nowrap;font-size:11.5px;}
 
   footer{
     text-align:center;padding:34px 24px 50px;color:var(--text-2);font-size:13px;
@@ -382,31 +405,45 @@
 </section>
 
 <section class="claim" id="claim">
-  <div class="card" id="claimCard" style="display:none;">
-    <h3>Airdrop Claim</h3>
-    <p class="desc" id="claimDesc">Your wallet is connected. Review your allocation below.</p>
+  <div class="claim-layout" id="claimLayout">
+    <div class="card" id="claimCard" style="display:none;">
+      <h3>Airdrop Claim</h3>
+      <p class="desc" id="claimDesc">Your wallet is connected. Review your allocation below.</p>
 
-    <div id="postConnect">
-      <div class="wallet-row">
-        <span class="addr" id="walletAddr">0x0000...0000</span>
-        <span class="net"><span class="dot"></span><span id="walletNet">Ethereum</span></span>
-      </div>
+      <div id="postConnect">
+        <div class="wallet-row">
+          <span class="addr" id="walletAddr">0x0000...0000</span>
+          <span class="net"><span class="dot"></span><span id="walletNet">Ethereum</span></span>
+        </div>
 
-      <div class="mock-flag">
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 9v4M12 17h.01M10.29 3.86 1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0Z"/></svg>
-        Mock data — demo preview, not a real balance
-      </div>
+        <div class="mock-flag">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 9v4M12 17h.01M10.29 3.86 1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0Z"/></svg>
+          Mock data — demo preview, not a real balance
+        </div>
 
-      <div class="amount-box">
-        <div><span class="num" id="claimAmount">0</span><span class="unit">$AURA</span></div>
-        <div class="usd" id="claimUsd">≈ $0.00 USD</div>
-      </div>
+        <div class="amount-box">
+          <div><span class="num" id="claimAmount">0</span><span class="unit">$AURA</span></div>
+          <div class="usd" id="claimUsd">≈ $0.00 USD</div>
+        </div>
 
-      <div class="claim-status" id="claimStatus">
-        <div class="spinner"></div>
-        <span id="claimStatusText">Submitting claim transaction…</span>
+        <div class="claim-status" id="claimStatus">
+          <div class="spinner"></div>
+          <span id="claimStatusText">Submitting claim transaction…</span>
+        </div>
       </div>
     </div>
+
+    <aside class="sidebar-feed" id="feedSidebar">
+      <div class="feed-head">
+        <h3>Recent Claims</h3>
+        <div class="live-pill"><span class="dot"></span> Live feed</div>
+      </div>
+      <div class="mock-flag" style="margin-bottom:14px;">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 9v4M12 17h.01M10.29 3.86 1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0Z"/></svg>
+        Mock data — simulated activity, not real on-chain transactions
+      </div>
+      <div class="feed-list" id="feedList"></div>
+    </aside>
   </div>
 </section>
 
@@ -485,6 +522,63 @@ function shortAddr(addr){
 function mockGetClaimAmount(/* address */){
   return Math.floor(Math.random() * (5000 - 500 + 1)) + 500;
 }
+
+const MOCK_ADDRESSES = [
+  '0x8f3Cf7ad23Cd3CaDbD9735AFf958023239c6A063',
+  '0x1aE0EA34a72D944a8C7603FfB3eC30a6669e454C',
+  '0xdA9dfA130Df4dE4673b89022EE50ff26f6EA73Cf',
+  '0x3f5CE5FBFe3E9af3971dD833D26bA9b5C936f0bE',
+  '0x631Fc1EA2270e98fbD9D92658eCe0F5a35B1B6C6',
+  '0xB794F5eA0ba39494cE839613fffBA74279579268',
+  '0x28C6c06298d514Db089934071355E5743bf21d60',
+  '0x21a31Ee1afC51d94C2eFcCAa2092aD1028285549',
+  '0x5754284f345afc66a98fbB0a0Afe71e0F007B949',
+  '0x4E83362442B8d1beC281594ceA3050c8EB01311C'
+];
+
+function randomMockFeedRow(){
+  const addr = MOCK_ADDRESSES[Math.floor(Math.random() * MOCK_ADDRESSES.length)];
+  const amt = Math.floor(Math.random() * (5000 - 500 + 1)) + 500;
+  const mins = Math.floor(Math.random() * 58) + 1;
+  return { addr, amt, time: mins + (mins === 1 ? ' min ago' : ' mins ago') };
+}
+
+function feedRowHTML(row, time){
+  return `
+    <div class="feed-avatar">${row.addr.slice(2,3).toUpperCase()}</div>
+    <div class="feed-info">
+      <div class="feed-addr">${shortAddr(row.addr)}</div>
+      <div class="feed-meta-line">
+        <span class="feed-amt">+${row.amt.toLocaleString()} AURA</span>
+        <span class="feed-time">${time}</span>
+      </div>
+    </div>
+  `;
+}
+
+function renderFeed(){
+  const list = document.getElementById('feedList');
+  list.innerHTML = '';
+  for(let i = 0; i < 6; i++){
+    const row = randomMockFeedRow();
+    const el = document.createElement('div');
+    el.className = 'feed-row';
+    el.style.animationDelay = (i * 0.05) + 's';
+    el.innerHTML = feedRowHTML(row, row.time);
+    list.appendChild(el);
+  }
+}
+renderFeed();
+// Periodically prepend a new mock row to simulate a "live" feed.
+setInterval(() => {
+  const list = document.getElementById('feedList');
+  const row = randomMockFeedRow();
+  const el = document.createElement('div');
+  el.className = 'feed-row flash';
+  el.innerHTML = feedRowHTML(row, 'just now');
+  list.insertBefore(el, list.firstChild);
+  if(list.children.length > 6) list.removeChild(list.lastChild);
+}, 6000);
 
 // ---------- Wallet connection state ----------
 let provider = null;
@@ -581,6 +675,7 @@ document.getElementById('opt-walletconnect').addEventListener('click', () => { c
 function onConnected(address, network){
   isConnected = true;
   document.getElementById('claimCard').style.display = 'block';
+  document.getElementById('claimLayout').classList.add('connected');
   document.getElementById('walletAddr').textContent = shortAddr(address);
   document.getElementById('walletNet').textContent = network && network.name ? network.name : 'Connected';
 
